@@ -1,36 +1,31 @@
 package kicode.code;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
-public class SetStatement extends Statement {
+public class PrintTextStatement extends Statement {
 
-    public Variable lhs;
-    public NumericExpression rhs;
+    public String text;
 
     final Color color = new Color(255, 102, 0);
-    Dimension dimension;
 
-    public SetStatement() {
-        lhs = new Variable("x");
-        rhs = new NullNumericExpression();
+    public PrintTextStatement() {
+        text = "";
     }
 
-    public SetStatement(Variable variable, NumericExpression value) {
-        lhs = variable;
-        rhs = value;
+    public PrintTextStatement(String description) {
+        this.text = description;
     }
 
     @Override
@@ -40,19 +35,10 @@ public class SetStatement extends Statement {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.setBackground(color);
 
-        JLabel label = new JLabel("Set");
+        JLabel label = new JLabel("Display: " + text);
         label.setFont(font);
         label.setForeground(Color.WHITE);
         panel.add(label);
-
-        panel.add(lhs.buildComponents(panel, this));
-
-        label = new JLabel("to");
-        label.setFont(font);
-        label.setForeground(Color.WHITE);
-        panel.add(label);
-
-        panel.add(rhs.buildComponents(panel, this));
 
         JButton addButton = new JButton("+");
         addButton.setBorder(new EmptyBorder(0, 2, 0, 2));
@@ -69,7 +55,6 @@ public class SetStatement extends Statement {
                 parentComp.repaint();
             }
         });
-
         panel.add(addButton);
 
         panel.add(buildRemoveButton(parentComp, panel, (Code) parentCode));
@@ -79,45 +64,25 @@ public class SetStatement extends Statement {
 
     @Override
     public void run(VirtualMachine vm) {
-        vm.setVariable(lhs.name, rhs.evaluate(vm));
+        vm.output += text + '\n';
     }
 
     @Override
     public void save(XMLStreamWriter xsw) throws XMLStreamException {
         xsw.writeStartElement(getClass().getSimpleName());
-        lhs.save(xsw);
-        rhs.save(xsw);
+        xsw.writeAttribute("text", text);
         xsw.writeEndElement();
     }
 
     @Override
     public Boolean load(XMLStreamReader xsr) throws XMLStreamException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
-        if (!xsr.hasNext()) {
-            return false;
+        text = xsr.getAttributeValue(null, "text");
+        while (!(xsr.getEventType() != XMLStreamReader.END_ELEMENT && xsr.getLocalName().equals(getClass().getSimpleName()))) {
+            if (!xsr.hasNext()) {
+                return false;
+            }
+            xsr.next();
         }
-        xsr.next();
-        if (xsr.getEventType() != XMLStreamReader.START_ELEMENT) {
-            return false;
-        }
-        String className = xsr.getLocalName();
-        lhs = (Variable) Class.forName("kicode.code." + className).getDeclaredConstructor().newInstance();
-        lhs.load(xsr);
-
-        if (!xsr.hasNext()) {
-            return false;
-        }
-        xsr.next();
-        if (xsr.getEventType() != XMLStreamReader.START_ELEMENT) {
-            return false;
-        }
-        className = xsr.getLocalName();
-        rhs = (NumericExpression) Class.forName("kicode.code." + className).getDeclaredConstructor().newInstance();
-        rhs.load(xsr);
-
-        if (!xsr.hasNext()) {
-            return false;
-        }
-        xsr.next();
-        return xsr.getEventType() == XMLStreamReader.END_ELEMENT;
+        return true;
     }
 }

@@ -14,7 +14,7 @@ public class VirtualMachine {
     public TreeMap<String, Double> variables;
     public String output;
 
-    VirtualMachine(List<CodeItem> code) {
+    public VirtualMachine(List<CodeItem> code) {
         this.code = code;
         variables = new TreeMap<>();
         output = "";
@@ -25,6 +25,9 @@ public class VirtualMachine {
     }
     
     public Double getVariable(String name) {
+        if (!variables.containsKey(name)) {
+            setVariable(name, 0.0);
+        }
         return variables.get(name);
     }
     

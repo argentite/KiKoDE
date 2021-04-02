@@ -1,8 +1,4 @@
 package kicode.code;
 
-/**
- *
- * @author argentite
- */
-public abstract class ControlFlowStatement extends CommandStatement {
+public abstract class ControlFlowStatement extends PrintTextStatement {
 }

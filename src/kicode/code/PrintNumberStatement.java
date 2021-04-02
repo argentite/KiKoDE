@@ -1,7 +1,6 @@
 package kicode.code;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
@@ -15,22 +14,18 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
-public class SetStatement extends Statement {
+public class PrintNumberStatement extends Statement {
 
-    public Variable lhs;
-    public NumericExpression rhs;
+    public NumericExpression value;
 
     final Color color = new Color(255, 102, 0);
-    Dimension dimension;
 
-    public SetStatement() {
-        lhs = new Variable("x");
-        rhs = new NullNumericExpression();
+    public PrintNumberStatement() {
+        value = new NullNumericExpression();
     }
 
-    public SetStatement(Variable variable, NumericExpression value) {
-        lhs = variable;
-        rhs = value;
+    public PrintNumberStatement(NumericExpression value) {
+        this.value = value;
     }
 
     @Override
@@ -40,19 +35,12 @@ public class SetStatement extends Statement {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.setBackground(color);
 
-        JLabel label = new JLabel("Set");
+        JLabel label = new JLabel("Display ");
         label.setFont(font);
         label.setForeground(Color.WHITE);
         panel.add(label);
 
-        panel.add(lhs.buildComponents(panel, this));
-
-        label = new JLabel("to");
-        label.setFont(font);
-        label.setForeground(Color.WHITE);
-        panel.add(label);
-
-        panel.add(rhs.buildComponents(panel, this));
+        panel.add(value.buildComponents(panel, this));
 
         JButton addButton = new JButton("+");
         addButton.setBorder(new EmptyBorder(0, 2, 0, 2));
@@ -79,14 +67,12 @@ public class SetStatement extends Statement {
 
     @Override
     public void run(VirtualMachine vm) {
-        vm.setVariable(lhs.name, rhs.evaluate(vm));
+        vm.output += value.evaluate(vm);
     }
 
-    @Override
     public void save(XMLStreamWriter xsw) throws XMLStreamException {
         xsw.writeStartElement(getClass().getSimpleName());
-        lhs.save(xsw);
-        rhs.save(xsw);
+        value.save(xsw);
         xsw.writeEndElement();
     }
 
@@ -100,24 +86,14 @@ public class SetStatement extends Statement {
             return false;
         }
         String className = xsr.getLocalName();
-        lhs = (Variable) Class.forName("kicode.code." + className).getDeclaredConstructor().newInstance();
-        lhs.load(xsr);
-
-        if (!xsr.hasNext()) {
-            return false;
-        }
-        xsr.next();
-        if (xsr.getEventType() != XMLStreamReader.START_ELEMENT) {
-            return false;
-        }
-        className = xsr.getLocalName();
-        rhs = (NumericExpression) Class.forName("kicode.code." + className).getDeclaredConstructor().newInstance();
-        rhs.load(xsr);
+        value = (NumericExpression) Class.forName("kicode.code." + className).getDeclaredConstructor().newInstance();
+        value.load(xsr);
 
         if (!xsr.hasNext()) {
             return false;
         }
         xsr.next();
         return xsr.getEventType() == XMLStreamReader.END_ELEMENT;
+
     }
 }

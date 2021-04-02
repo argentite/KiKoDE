@@ -1,62 +1,40 @@
 package kicode;
 
 import java.util.Arrays;
-import javax.swing.JFrame;
-import kicode.code.AddExpression;
-import kicode.code.Block;
-import kicode.code.CodeItem;
-import kicode.code.CommandStatement;
-import kicode.code.EqualExpression;
-import kicode.code.IfStatement;
-import kicode.code.LessThanExpression;
-import kicode.code.NumberExpression;
-import kicode.code.SetStatement;
-import kicode.code.Statement;
-import kicode.code.Variable;
-import kicode.code.WhileStatement;
+import kicode.code.*;
+import kicode.ui.EditorWindow;
 
-/**
- *
- * @author argentite
- */
 public class Kicode {
 
     public static void main(String[] args) {
-        // TODO code application logic here
-        MainWindow frame = new MainWindow();
+        EditorWindow frame = new EditorWindow();
 
         CodeItem c1 = new CodeItem(new Block(new Statement[]{
-            new CommandStatement("Hello, World!"),
-            new SetStatement(new Variable("speed"), new NumberExpression(42)),
-            new CommandStatement("Another statement!"),
-            new CommandStatement("Yet another statement!")
-        }));
-
-        CodeItem c2 = new CodeItem(new Block(new Statement[]{
-            new CommandStatement("Hello, World!"),
-            new CommandStatement("Another statement!"),
+            new PrintTextStatement("Hello, World!"),
+            new PrintTextStatement("Another line of output"),
+            new SetStatement(new Variable("speed"), new AddExpression(new NumberExpression(16), new NumberExpression(16))),
             new IfStatement(
-            new EqualExpression(new Variable("speed"), new NumberExpression(69)),
+            new EqualExpression(new NumberExpression(42), new AddExpression(new AddExpression(new Variable("speed"), new NumberExpression(5)), new NumberExpression(5))),
             new Block(new Statement[]{
-                new CommandStatement("Nice")}),
+                new PrintTextStatement("Logic holds!")}),
             new Block(new Statement[]{
-                new CommandStatement("Sad")})
+                new PrintTextStatement("Something is wrong...")})
             ),
             new SetStatement(new Variable("counter"), new NumberExpression(1)),
             new WhileStatement(
             new LessThanExpression(new Variable("counter"), new NumberExpression(5)),
             new Block(new Statement[]{
-                new CommandStatement("Hello"),
+                new PrintTextStatement(" Hello"),
+                new PrintNumberStatement(new Variable("counter")),
                 new SetStatement(new Variable("counter"), new AddExpression(new Variable("counter"), new NumberExpression(1)))})
             ),
-            new CommandStatement("Yet another statement!")
+            new PrintTextStatement("Yet another statement!")
         }));
-        CodeItem[] testcode = {c1, c2};
+        CodeItem[] testcode = {c1};
 
         frame.canvas.code = Arrays.asList(testcode);
         frame.canvas.buildUI();
 
-        //VirtualMachine vm = new VirtualMachine(testcode);
         frame.setVisible(true);
     }
 }

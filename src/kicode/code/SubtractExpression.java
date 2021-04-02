@@ -2,13 +2,13 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
-public class AddExpression extends NumericSymbolExpression {
-    
-    public AddExpression(NumericExpression lhs, NumericExpression rhs) {
+public class SubtractExpression extends NumericSymbolExpression {
+
+    public SubtractExpression(NumericExpression lhs, NumericExpression rhs) {
         super(lhs, rhs);
     }
-    
-    public AddExpression() {
+
+    public SubtractExpression() {
         super();
     }
 
@@ -19,6 +19,6 @@ public class AddExpression extends NumericSymbolExpression {
 
     @Override
     public String getSymbol() {
-        return "+";
+        return "-";
     }
 }
