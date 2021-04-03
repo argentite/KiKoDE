@@ -32,6 +32,7 @@ public class VirtualMachine {
     }
     
     public void run() {
+        output = "";
         code.forEach((item) -> item.body.run(this));
     }
 }
