@@ -230,6 +230,11 @@ public class EditorWindow extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            String filename = file.toString();
+            if (!filename.endsWith(".kicode")) {
+                filename += ".kicode";
+                file = new File(filename);
+            }
 
             XMLStreamWriter xsw = null;
             try {
@@ -260,11 +265,6 @@ public class EditorWindow extends javax.swing.JFrame {
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            String filename = file.toString();
-            if (!filename.endsWith(".kicode")) {
-                filename += ".kicode";
-                file = new File(filename);
-            }
             
             XMLStreamReader xsr = null;
             CodeItem c = null;
@@ -283,7 +283,7 @@ public class EditorWindow extends javax.swing.JFrame {
                     }
                 }
             } catch (IOException ex) {
-                System.err.println("Failed to load from file " + filename + ": " + ex.getMessage());
+                System.err.println("Failed to load from file " + file.getAbsolutePath() + ": " + ex.getMessage());
             } catch (XMLStreamException ex) {
                 System.err.println("Error in XML parsing: " + ex.getMessage());
             } catch (ClassNotFoundException ex) {
