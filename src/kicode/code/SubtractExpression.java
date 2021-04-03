@@ -14,7 +14,7 @@ public class SubtractExpression extends NumericSymbolExpression {
 
     @Override
     public Double evaluate(VirtualMachine vm) {
-        return lhs.evaluate(vm) + rhs.evaluate(vm);
+        return lhs.evaluate(vm) - rhs.evaluate(vm);
     }
 
     @Override
