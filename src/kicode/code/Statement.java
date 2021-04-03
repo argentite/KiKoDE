@@ -8,8 +8,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import kicode.ui.CanvasDrawable;
 
 public abstract class Statement implements Code, CanvasDrawable {
@@ -36,22 +34,21 @@ public abstract class Statement implements Code, CanvasDrawable {
         int choice = JOptionPane.showOptionDialog(SwingUtilities.getRoot(parentComp), "Choose type of statement you want to create", "Statement Type", 0, JOptionPane.QUESTION_MESSAGE, null, statementTypes, null);
 
         switch (choice) {
-            case 0 -> {
+            case 0:
                 return new WhileStatement();
-            }
-            case 1 -> {
+            case 1:
                 return new IfStatement();
-            }
-            case 2 -> {
+            case 2:
                 return new SetStatement();
-            }
-            case 3 -> {
+            case 3:
                 String text = JOptionPane.showInputDialog(SwingUtilities.getRoot(parentComp), "Enter text to display: ", "Display text", 0);
-                return new PrintTextStatement(text);
-            }
-            case 4 -> {
+                if (text != null) {
+                    return new PrintTextStatement(text);
+                } else {
+                    return null;
+                }
+            case 4:
                 return new PrintNumberStatement();
-            }
         }
 
         return null;

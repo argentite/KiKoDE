@@ -24,13 +24,14 @@ public interface NumericExpression extends Expression {
         int choice = JOptionPane.showOptionDialog(SwingUtilities.getRoot(parentComp), "Choose type of expression you want to create", "EXpression Type", 0, JOptionPane.QUESTION_MESSAGE, null, expressionTypes, null);
 
         switch (choice) {
-            case 0 -> {
+            case 0:
                 String name = JOptionPane.showInputDialog(SwingUtilities.getRoot(parentComp), "Variable name: ");
                 if (name != null) {
                     return new Variable(name);
                 }
-            }
-            case 1 -> {
+                break;
+
+            case 1:
                 try {
                     String numStr = JOptionPane.showInputDialog(SwingUtilities.getRoot(parentComp), "Number: ");
                     if (numStr != null) {
@@ -40,19 +41,18 @@ public interface NumericExpression extends Expression {
                 } catch (NumberFormatException e) {
                     return null;
                 }
-            }
-            case 2 -> {
+                break;
+
+            case 2:
                 return new AddExpression();
-            }
-            case 3 -> {
+            case 3:
                 return new SubtractExpression();
-            }
-            case 4 -> {
+            case 4:
                 return new MultiplyExpression();
-            }
-            case 5 -> {
+
+            case 5:
                 return new DivideExpression();
-            }
+
         }
 
         return null;
