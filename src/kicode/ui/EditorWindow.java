@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.xml.stream.XMLInputFactory;
@@ -258,6 +256,11 @@ public class EditorWindow extends javax.swing.JFrame {
                 c = new CodeItem();
                 if (!c.load(xsr)) {
                     System.err.println("Loading failed!");
+                } else {
+                    CodeItem[] testcode = {c};
+                    canvas.code = Arrays.asList(testcode);
+                    canvas.buildUI();
+                    vm.code = canvas.code;
                 }
             }
         } catch (IOException ex) {
@@ -276,10 +279,6 @@ public class EditorWindow extends javax.swing.JFrame {
             } catch (XMLStreamException e) {
                 System.err.println("Error in XML parsing: " + e.getMessage());
             }
-            
-            CodeItem[] testcode = {c};
-            canvas.code = Arrays.asList(testcode);
-            canvas.buildUI();
         }
     }//GEN-LAST:event_loadButtonActionPerformed
 
