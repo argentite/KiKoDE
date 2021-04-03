@@ -68,7 +68,6 @@ public class Block implements Code, CanvasDrawable {
         while (!(xsr.getEventType() == XMLStreamReader.END_ELEMENT && xsr.getLocalName().equals("Block"))) {
             if (xsr.getEventType() == XMLStreamReader.START_ELEMENT) {
                 String className = xsr.getLocalName();
-                System.out.println(className);
                 Statement statement = (Statement) Class.forName("kicode.code." + className).getDeclaredConstructor().newInstance();
                 statement.load(xsr);
                 body.add(statement);

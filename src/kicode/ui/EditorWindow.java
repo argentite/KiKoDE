@@ -1,12 +1,15 @@
 package kicode.ui;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -20,6 +23,8 @@ public class EditorWindow extends javax.swing.JFrame {
 
     public VirtualMachine vm;
 
+    JFileChooser fileChooser;
+
     /**
      * Creates new form EditorWindow
      */
@@ -29,6 +34,10 @@ public class EditorWindow extends javax.swing.JFrame {
         variableList.setModel(new DefaultListModel<>());
 
         vm = new VirtualMachine(canvas.code);
+
+        fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("KiCoDE programs", "kicode"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
     }
 
     /**
@@ -219,65 +228,76 @@ public class EditorWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        String filename = "/home/argentite/test.xml";
-        XMLStreamWriter xsw = null;
-        try {
-            xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(new FileWriter(filename));
-            xsw.writeStartDocument();
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
 
-            for (var item : canvas.code) {
-                item.save(xsw);
-            }
-
-            xsw.writeEndDocument();
-        } catch (IOException e) {
-            System.err.println("Failed to save to file " + filename + ": " + e.getMessage());
-        } catch (XMLStreamException e) {
-            System.err.println("Error in XML conversion: " + e.getMessage());
-        } finally {
+            XMLStreamWriter xsw = null;
             try {
-                if (xsw != null) {
-                    xsw.close();
+                xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(new FileWriter(file));
+                xsw.writeStartDocument();
+
+                for (var item : canvas.code) {
+                    item.save(xsw);
                 }
+
+                xsw.writeEndDocument();
+            } catch (IOException e) {
+                System.err.println("Failed to save to file " + file.getAbsolutePath() + ": " + e.getMessage());
             } catch (XMLStreamException e) {
                 System.err.println("Error in XML conversion: " + e.getMessage());
+            } finally {
+                try {
+                    if (xsw != null) {
+                        xsw.close();
+                    }
+                } catch (XMLStreamException e) {
+                    System.err.println("Error in XML conversion: " + e.getMessage());
+                }
             }
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        String filename = "/home/argentite/test.xml";
-        XMLStreamReader xsr = null;
-        CodeItem c = null;
-        try {
-            xsr = XMLInputFactory.newInstance().createXMLStreamReader(new FileReader(filename));
-            xsr.next();
-            if (xsr.getEventType() == XMLStreamReader.START_ELEMENT && xsr.getLocalName().equals("Code")) {
-                c = new CodeItem();
-                if (!c.load(xsr)) {
-                    System.err.println("Loading failed!");
-                } else {
-                    CodeItem[] testcode = {c};
-                    canvas.code = Arrays.asList(testcode);
-                    canvas.buildUI();
-                    vm.code = canvas.code;
-                }
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String filename = file.toString();
+            if (!filename.endsWith(".kicode")) {
+                filename += ".kicode";
+                file = new File(filename);
             }
-        } catch (IOException ex) {
-            System.err.println("Failed to load from file " + filename + ": " + ex.getMessage());
-        } catch (XMLStreamException ex) {
-            System.err.println("Error in XML parsing: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            System.err.println("Invalid save file: " + ex.getMessage());
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
-            System.err.println("Loading error: " + ex.getMessage());
-        } finally {
+            
+            XMLStreamReader xsr = null;
+            CodeItem c = null;
             try {
-                if (xsr != null) {
-                    xsr.close();
+                xsr = XMLInputFactory.newInstance().createXMLStreamReader(new FileReader(file));
+                xsr.next();
+                if (xsr.getEventType() == XMLStreamReader.START_ELEMENT && xsr.getLocalName().equals("Code")) {
+                    c = new CodeItem();
+                    if (!c.load(xsr)) {
+                        System.err.println("Loading failed!");
+                    } else {
+                        CodeItem[] testcode = {c};
+                        canvas.code = Arrays.asList(testcode);
+                        canvas.buildUI();
+                        vm.code = canvas.code;
+                    }
                 }
-            } catch (XMLStreamException e) {
-                System.err.println("Error in XML parsing: " + e.getMessage());
+            } catch (IOException ex) {
+                System.err.println("Failed to load from file " + filename + ": " + ex.getMessage());
+            } catch (XMLStreamException ex) {
+                System.err.println("Error in XML parsing: " + ex.getMessage());
+            } catch (ClassNotFoundException ex) {
+                System.err.println("Invalid save file: " + ex.getMessage());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
+                System.err.println("Loading error: " + ex.getMessage());
+            } finally {
+                try {
+                    if (xsr != null) {
+                        xsr.close();
+                    }
+                } catch (XMLStreamException e) {
+                    System.err.println("Error in XML parsing: " + e.getMessage());
+                }
             }
         }
     }//GEN-LAST:event_loadButtonActionPerformed
