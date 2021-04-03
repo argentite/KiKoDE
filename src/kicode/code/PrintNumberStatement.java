@@ -67,7 +67,7 @@ public class PrintNumberStatement extends Statement {
 
     @Override
     public void run(VirtualMachine vm) {
-        vm.output += value.evaluate(vm);
+        vm.output += value.evaluate(vm) + "\n";
     }
 
     public void save(XMLStreamWriter xsw) throws XMLStreamException {

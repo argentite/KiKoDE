@@ -24,8 +24,8 @@ public class Kicode {
             new WhileStatement(
             new LessThanExpression(new Variable("counter"), new NumberExpression(5)),
             new Block(new Statement[]{
-                new PrintTextStatement(" Hello"),
                 new PrintNumberStatement(new Variable("counter")),
+                new PrintTextStatement("Hello"),
                 new SetStatement(new Variable("counter"), new AddExpression(new Variable("counter"), new NumberExpression(1)))})
             ),
             new PrintTextStatement("Yet another statement!")
