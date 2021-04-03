@@ -12,6 +12,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import static kicode.code.Expression.FONT;
 
+/**
+ * An expression whose value is a number and is a binary operator of two numeric expressions
+ */
 public abstract class NumericSymbolExpression implements NumericExpression {
 
     public NumericExpression lhs;
@@ -49,6 +52,7 @@ public abstract class NumericSymbolExpression implements NumericExpression {
         return panel;
     }
 
+    @Override
     public void save(XMLStreamWriter xsw) throws XMLStreamException {
         xsw.writeStartElement(getClass().getSimpleName());
         lhs.save(xsw);

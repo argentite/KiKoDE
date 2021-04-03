@@ -6,6 +6,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import kicode.code.CodeItem;
 
+/**
+ * A custom component that houses UI for code
+ */
 public class CodeCanvas extends JPanel {
 
     public List<CodeItem> code;

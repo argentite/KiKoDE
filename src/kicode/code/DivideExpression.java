@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * Division of two expressions
+ */
 public class DivideExpression extends NumericSymbolExpression {
     
     public DivideExpression(NumericExpression lhs, NumericExpression rhs) {

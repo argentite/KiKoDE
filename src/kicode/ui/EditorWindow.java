@@ -19,6 +19,9 @@ import kicode.VirtualMachine;
 import kicode.code.CodeItem;
 import kicode.code.PrintTextStatement;
 
+/**
+ * Main Window of application
+ */
 public class EditorWindow extends javax.swing.JFrame {
 
     public VirtualMachine vm;
@@ -197,7 +200,6 @@ public class EditorWindow extends javax.swing.JFrame {
         vm.variables.forEach((name, value) -> variableListModel.addElement(name + ": " + value));
 
         outputArea.setText(vm.output);
-        System.out.println(canvas.getFont());
     }//GEN-LAST:event_runButtonActionPerformed
 
     private void addVarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVarButtonActionPerformed

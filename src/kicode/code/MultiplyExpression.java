@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * Multiplication of two expressions
+ */
 public class MultiplyExpression extends NumericSymbolExpression {
     
     public MultiplyExpression(NumericExpression lhs, NumericExpression rhs) {

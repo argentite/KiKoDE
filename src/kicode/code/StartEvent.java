@@ -6,6 +6,9 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * An event that is triggered when starting the execution
+ */
 public class StartEvent extends Event {
 
     final Color color = new Color(0, 102, 0);

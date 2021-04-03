@@ -15,6 +15,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * Set the value of a variable
+ */
 public class SetStatement extends Statement {
 
     public Variable lhs;

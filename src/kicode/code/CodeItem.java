@@ -7,6 +7,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.ui.CanvasDrawable;
 
+/**
+ * An unit of code that can run in response to a its corresponding event
+ */
 public class CodeItem implements CanvasDrawable {
 
     int posX;

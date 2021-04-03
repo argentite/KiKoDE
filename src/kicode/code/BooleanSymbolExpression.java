@@ -11,6 +11,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
+/**
+ * A binary operator with numeric operands
+ */
 public abstract class BooleanSymbolExpression implements BooleanExpression {
 
     public NumericExpression lhs;

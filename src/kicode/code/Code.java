@@ -6,6 +6,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * An interface to be implemented by anything runnable in VM
+ */
 public interface Code {
 
     void run(VirtualMachine vm);

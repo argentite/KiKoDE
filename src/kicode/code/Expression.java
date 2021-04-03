@@ -7,6 +7,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.ui.CanvasDrawable;
 
+/**
+ * An unit (or whole) of expression that can be evaluated
+ */
 public abstract interface Expression extends CanvasDrawable {
 
     final Font FONT = new Font("SansSerif", Font.BOLD, 12);

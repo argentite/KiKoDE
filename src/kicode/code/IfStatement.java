@@ -15,6 +15,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * Two blocks of statement that run alternatively based on a condition expression
+ */
 public class IfStatement extends Statement {
 
     final int INDENT_SIZE = 16;
@@ -171,7 +174,6 @@ public class IfStatement extends Statement {
         }
         xsr.next();
         if (xsr.getEventType() != XMLStreamReader.START_ELEMENT || (!xsr.getLocalName().equals("Block"))) {
-            System.err.println("IFFFF");
             return false;
         }
         ifBody.load(xsr);
@@ -181,7 +183,6 @@ public class IfStatement extends Statement {
         }
         xsr.next();
         if (xsr.getEventType() != XMLStreamReader.START_ELEMENT || (!xsr.getLocalName().equals("Block"))) {
-            System.err.println("ELLLSSSEEE");
             return false;
         }
         elseBody.load(xsr);

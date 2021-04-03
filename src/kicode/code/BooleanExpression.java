@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import kicode.VirtualMachine;
 
+/**
+ * An expression that evaluates to a Boolean value
+ */
 public interface BooleanExpression extends Expression {
 
     final Color color = new Color(102, 0, 102);

@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * Logical and of two BooleanExpression
+ */
 public class AndExpression extends BooleanLogicalExpression {
 
     public AndExpression(BooleanExpression lhs, BooleanExpression rhs) {

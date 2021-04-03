@@ -1,7 +1,6 @@
 package kicode.code;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -12,10 +11,12 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * A numeric expression that just represents a constant number
+ */
 public class NumberExpression implements NumericExpression {
 
     public Double value;
-    Dimension dimension;
 
     public NumberExpression() {
         value = 0.0;

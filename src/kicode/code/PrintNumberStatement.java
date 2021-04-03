@@ -14,6 +14,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * Print the numeric value of an expression
+ */
 public class PrintNumberStatement extends Statement {
 
     public NumericExpression value;

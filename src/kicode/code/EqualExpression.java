@@ -3,6 +3,9 @@ package kicode.code;
 import java.util.Objects;
 import kicode.VirtualMachine;
 
+/**
+ * Equality of two expressions
+ */
 public class EqualExpression extends BooleanSymbolExpression {
 
     public EqualExpression(NumericExpression lhs, NumericExpression rhs) {

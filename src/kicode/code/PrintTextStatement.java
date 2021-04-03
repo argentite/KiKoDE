@@ -14,6 +14,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * Print a string
+ */
 public class PrintTextStatement extends Statement {
 
     public String text;

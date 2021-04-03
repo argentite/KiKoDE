@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * Logical or of two BooleanExpression
+ */
 public class OrExpression extends BooleanLogicalExpression {
 
     public OrExpression(BooleanExpression lhs, BooleanExpression rhs) {

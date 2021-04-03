@@ -10,6 +10,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * A placeholder expression to fill a slot for a Boolean expression
+ */
 public class NullBooleanExpression implements BooleanExpression {
 
     final Color color = new Color(128, 128, 128);

@@ -5,8 +5,7 @@ import java.util.TreeMap;
 import kicode.code.CodeItem;
 
 /**
- *
- * @author argentite
+ * Handles an execution context with variables and running mechanism
  */
 public class VirtualMachine {
 

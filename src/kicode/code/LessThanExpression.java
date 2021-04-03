@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * True if left operand is less than right operand
+ */
 public class LessThanExpression extends BooleanSymbolExpression {
 
     public LessThanExpression(NumericExpression lhs, NumericExpression rhs) {

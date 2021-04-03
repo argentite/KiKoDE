@@ -10,6 +10,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import kicode.ui.CanvasDrawable;
 
+/**
+ * An abstract class that represents an executable unit of code 
+ */
 public abstract class Statement implements Code, CanvasDrawable {
 
     final Font font = new Font("SansSerif", 0, 12);

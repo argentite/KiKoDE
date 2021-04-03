@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * Subtraction of two expressions
+ */
 public class SubtractExpression extends NumericSymbolExpression {
 
     public SubtractExpression(NumericExpression lhs, NumericExpression rhs) {

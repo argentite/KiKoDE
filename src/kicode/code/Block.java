@@ -15,7 +15,7 @@ import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 import kicode.ui.CanvasDrawable;
 
-/*
+/**
  * This represents a sequence of statements
  */
 public class Block implements Code, CanvasDrawable {

@@ -2,6 +2,9 @@ package kicode.code;
 
 import kicode.VirtualMachine;
 
+/**
+ * Addition of two expressions
+ */
 public class AddExpression extends NumericSymbolExpression {
     
     public AddExpression(NumericExpression lhs, NumericExpression rhs) {

@@ -16,6 +16,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * An unit of code that a reference a variable by name
+ */
 public class Variable implements NumericExpression {
 
     public String name;

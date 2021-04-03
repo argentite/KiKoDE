@@ -15,6 +15,9 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import kicode.VirtualMachine;
 
+/**
+ * Repeatedly run a set of statements while a Boolean expression is true
+ */
 public class WhileStatement extends Statement {
 
     final int INDENT_SIZE = 16;
