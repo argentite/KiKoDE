@@ -1,0 +1,101 @@
+@startuml
+
+interface Code {
+    run(VirtualMachine vm)
+    save()
+    load()
+}
+
+interface CanvasDrawable {
+    buildComponents()
+}
+
+interface Expression {
+    save()
+    load()
+}
+Expression <|-- CanvasDrawable
+
+interface Numeric {
+    Double evaluate()
+}
+Numeric <|-- Expression
+
+class NullNumeric {}
+NullNumeric <|.. Numeric
+
+class Number {}
+Number <|.. Numeric
+
+abstract class NumericSymbol {}
+NumericSymbol <|.. Numeric
+NumericSymbol "1" o-- "2" Numeric
+
+class Add {}
+Add <|-- NumericSymbol
+
+class Subtract {}
+Subtract <|-- NumericSymbol
+
+class Multiply {}
+Multiply <|-- NumericSymbol
+
+class Division {}
+Division <|-- NumericSymbol
+
+interface Boolean {
+    2Boolean evaluate()
+}
+Boolean <|-- Expression
+
+class NullBoolean {}
+NullBoolean <|.. Boolean
+
+abstract class BooleanLogical {}
+BooleanLogical <|.. Boolean 
+BooleanLogical "1" o-- "2" Boolean
+
+class And {}
+And <|-- BooleanLogical
+
+class Or {}
+Or <|-- BooleanLogical
+
+abstract class BooleanSymbol
+BooleanSymbol <|.. Boolean
+BooleanSymbol "1" o-- "2" Numeric
+
+class LessThan {}
+LessThan <|-- BooleanSymbol
+
+class Equal {}
+Equal <|-- BooleanSymbol
+
+class GreaterThan {}
+GreaterThan <|-- BooleanSymbol
+
+abstract class Statement {}
+Statement <|.. Code
+Statement <|.. CanvasDrawable
+
+class If {}
+If <|-- Statement
+
+class Set {}
+Set <|-- Statement
+
+class While {}
+While <|-- Statement
+
+class PrintText {}
+PrintText <|-- Statement
+
+class PrintNumber {}
+PrintNumber <|-- Statement
+
+class Block {}
+Block <|.. Code
+Block <|.. CanvasDrawable
+
+@enduml
+
