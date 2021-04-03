@@ -45,7 +45,7 @@ public class SetStatement extends Statement {
         label.setForeground(Color.WHITE);
         panel.add(label);
 
-        panel.add(lhs.buildComponents(panel, this));
+        panel.add(lhs.buildRenamableComponents(panel, this));
 
         label = new JLabel("to");
         label.setFont(font);

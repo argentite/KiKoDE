@@ -2,11 +2,15 @@ package kicode.code;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
@@ -37,6 +41,32 @@ public class Variable implements NumericExpression {
         panel.add(label);
 
         addChangeEvent(panel, parentComp, parentCode, this);
+
+        return panel;
+    }
+
+    public JComponent buildRenamableComponents(JComponent parentComp, Object parentCode) {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createLineBorder(Color.white));
+        panel.setBackground(color);
+
+        JLabel label = new JLabel(name);
+        label.setForeground(Color.WHITE);
+        panel.add(label);
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+                String newname = JOptionPane.showInputDialog(SwingUtilities.getRoot(parentComp), "Enter new variable name: ");
+                if (newname != null) {
+                    name = newname;
+                    parentComp.remove(1);
+                    parentComp.add(buildRenamableComponents(parentComp, parentCode), 1);
+                    parentComp.revalidate();
+                    parentComp.repaint();
+                }
+            }
+        });
 
         return panel;
     }
