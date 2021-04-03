@@ -18,7 +18,7 @@ public interface BooleanExpression extends Expression {
     default BooleanExpression showChangeDialog(JComponent parentComp) {
         final String[] expressionTypes = {"=", "<", ">", "and", "or"};
 
-        int choice = JOptionPane.showOptionDialog(SwingUtilities.getRoot(parentComp), "Choose type of statement you want to create", "Statement Type", 0, JOptionPane.QUESTION_MESSAGE, null, expressionTypes, null);
+        int choice = JOptionPane.showOptionDialog(SwingUtilities.getRoot(parentComp), "Choose type of expression you want to create", "Expression Type", 0, JOptionPane.QUESTION_MESSAGE, null, expressionTypes, null);
 
         switch (choice) {
             case 0:
